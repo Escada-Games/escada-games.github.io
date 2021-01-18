@@ -69,21 +69,26 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class JsonItchioGame {
-  final String strName; // Game name
-  final bool bPublished; // If game is published
-  final String strUrl; // The game's URL
-  final String strCover; // Game cover Url
-  final String strDescription; // Game's decription, aka short_text
+  final String strTitle; // Game name
+  final bool bSale;
+  final String strCoverImageUrl;
+  final bool bOriginalPrice;
+  final String strPrice;
 
   JsonItchioGame(
-      {this.strName,
-      this.bPublished,
-      this.strUrl,
-      this.strCover,
-      this.strDescription});
+      {this.strTitle,
+      this.bSale,
+      this.strCoverImageUrl,
+      this.bOriginalPrice,
+      this.strPrice});
 
   factory JsonItchioGame.fromJson(Map<String, dynamic> json) {
-    return JsonItchioGame(strName: json['title']);
+    return JsonItchioGame(
+        strTitle: json['title'],
+        bSale: json['sale'],
+        strCoverImageUrl: json['cover_image'],
+        bOriginalPrice: json['original_price'],
+        strPrice: json['price']);
   }
 }
 
