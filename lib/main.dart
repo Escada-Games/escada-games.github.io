@@ -22,6 +22,37 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   final String title;
+  List<String> lGameList = [
+    'almastone',
+    'archer-hunter-prototype',
+    'ayera-the-void-sand-witch',
+    'birb-peak',
+    'birds-of-steel',
+    'blackened',
+    'cosmic-potato-trader-simulator',
+    'delay-mage',
+    'dentaldefense',
+    'diver-down',
+    'double-sided',
+    'giovannis-climb',
+    'gravitron-experiment',
+    'horse-knight',
+    'jank-warrior',
+    'just-another-slime-platformer',
+    'mizunis-ghostly-thermal-center',
+    'nothing-to-see-here',
+    'null-dagger',
+    'pickaxe-tower',
+    'pigeon-ascent',
+    'redazul',
+    'serpent',
+    'ticaruga',
+    'wafflegeddon',
+    'work-so-that-i-can-get-those-beautiful-pigeons-you-darn-bees',
+    'zeitmeister'
+  ];
+
+  List<dynamic> lFutureGames = [];
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -33,7 +64,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    futureItchioGame = fetchItchioGameData();
+    futureItchioGame = fetchItchioGameData('diver-down');
+    for (String game in widget.lGameList) {
+      widget.lFutureGames.add(fetchItchioGameData(game));
+    }
   }
 
   @override
@@ -45,22 +79,62 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
+          children: [
+            SelectableText(
               'Nossos jogos:',
             ),
-            FutureBuilder<JsonItchioGame>(
-              future: futureItchioGame,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return SelectableText(snapshot.data.strName);
-                } else if (snapshot.hasError) {
-                  return SelectableText("${snapshot.error}\nErro no snapshot.");
-                } else {
-                  return CircularProgressIndicator();
-                }
-              },
+            SizedBox(
+              height: 8,
             ),
+            for (Future<JsonItchioGame> futureGame in widget.lFutureGames)
+              FutureBuilder<JsonItchioGame>(
+                future: futureGame,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Column(children: [
+                      SelectableText(snapshot.data.strTitle),
+                      Image.network(snapshot.data.strCoverImageUrl)
+                    ]);
+                  } else if (snapshot.hasError) {
+                    return SelectableText(
+                        "${snapshot.error}\nErro no snapshot.");
+                  } else {
+                    return CircularProgressIndicator();
+                  }
+                },
+              )
+            // GridView.count(
+            //   crossAxisCount: 2,
+            //   children: [
+            //     for (Future<JsonItchioGame> futureGame in widget.lFutureGames)
+            //       FutureBuilder<JsonItchioGame>(
+            //         future: futureGame,
+            //         builder: (context, snapshot) {
+            //           if (snapshot.hasData) {
+            //             return SelectableText(snapshot.data.strTitle);
+            //           } else if (snapshot.hasError) {
+            //             return SelectableText(
+            //                 "${snapshot.error}\nErro no snapshot.");
+            //           } else {
+            //             return CircularProgressIndicator();
+            //           }
+            //         },
+            //       )
+            //   ],
+            // ),
+
+            // FutureBuilder<JsonItchioGame>(
+            //   future: futureItchioGame,
+            //   builder: (context, snapshot) {
+            //     if (snapshot.hasData) {
+            //       return SelectableText(snapshot.data.strTitle);
+            //     } else if (snapshot.hasError) {
+            //       return SelectableText("${snapshot.error}\nErro no snapshot.");
+            //     } else {
+            //       return CircularProgressIndicator();
+            //     }
+            //   },
+            // ),
           ],
         ),
       ),
@@ -92,19 +166,16 @@ class JsonItchioGame {
   }
 }
 
-Future<JsonItchioGame> fetchItchioGameData() async {
-  String itchioKey = 'wwDZ8H5JgClYc7Fft1iei41VgkCFLmEKBKr6gvOk';
-  String apiUrl = 'https://itch.io/api/1/' + itchioKey + '/my-games';
+Future<JsonItchioGame> fetchItchioGameData(String strGameName) async {
+  String apiUrl = 'https://escada-games.itch.io/' + strGameName + '/data.json';
   final response = await http.get(apiUrl);
-  print('?ASD?ASD?ASd');
 
   if (response.statusCode == 200) {
     var responseBody = dartConvert.jsonDecode(response.body);
     print(apiUrl);
     print(responseBody);
-    return JsonItchioGame.fromJson(responseBody[0]);
+    return JsonItchioGame.fromJson(responseBody);
   } else {
-    print('Erro: falha em obter dados da API do itch.io.');
     throw Exception('Erro: falha em obter dados da API do itch.io.');
   }
 }
