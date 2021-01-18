@@ -86,23 +86,38 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(
               height: 8,
             ),
-            for (Future<JsonItchioGame> futureGame in widget.lFutureGames)
-              FutureBuilder<JsonItchioGame>(
-                future: futureGame,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Column(children: [
-                      SelectableText(snapshot.data.strTitle),
-                      Image.network(snapshot.data.strCoverImageUrl)
-                    ]);
-                  } else if (snapshot.hasError) {
-                    return SelectableText(
-                        "${snapshot.error}\nErro no snapshot.");
-                  } else {
-                    return CircularProgressIndicator();
-                  }
-                },
-              )
+            Expanded(
+              child: Scrollbar(
+                child: ListView(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  children: [
+                    for (Future<JsonItchioGame> futureGame
+                        in widget.lFutureGames)
+                      FutureBuilder<JsonItchioGame>(
+                        future: futureGame,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return Column(children: [
+                              SelectableText(snapshot.data.strTitle),
+                              Image.network(
+                                snapshot.data.strCoverImageUrl,
+                                width: 315,
+                              )
+                            ]);
+                          } else if (snapshot.hasError) {
+                            return SelectableText(
+                                "${snapshot.error}\nErro no snapshot.");
+                          } else {
+                            return CircularProgressIndicator();
+                          }
+                        },
+                      )
+                  ],
+                ),
+              ),
+            ),
+
             // GridView.count(
             //   crossAxisCount: 2,
             //   children: [
