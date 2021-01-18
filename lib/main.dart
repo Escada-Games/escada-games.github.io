@@ -88,9 +88,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Expanded(
               child: Scrollbar(
-                child: ListView(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
+                child: GridView.count(
+                  crossAxisCount: 6,
+
+                  // scrollDirection: Axis.vertical,
+                  // shrinkWrap: true,
                   children: [
                     for (Future<JsonItchioGame> futureGame
                         in widget.lFutureGames)
