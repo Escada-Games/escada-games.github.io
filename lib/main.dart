@@ -89,7 +89,11 @@ class _MyHomePageState extends State<MyHomePage> {
             Expanded(
               child: Scrollbar(
                 child: GridView.count(
-                  crossAxisCount: 6,
+                  crossAxisCount: 5,
+                  padding: EdgeInsets.all(128),
+                  mainAxisSpacing: 16.0,
+                  crossAxisSpacing: 16.0,
+                  shrinkWrap: true,
 
                   // scrollDirection: Axis.vertical,
                   // shrinkWrap: true,
@@ -101,10 +105,17 @@ class _MyHomePageState extends State<MyHomePage> {
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             return Column(children: [
-                              SelectableText(snapshot.data.strTitle),
-                              Image.network(
-                                snapshot.data.strCoverImageUrl,
-                                width: 315,
+                              SelectableText(
+                                snapshot.data.strTitle,
+                                textAlign: TextAlign.center,
+                              ),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: Image.network(
+                                  snapshot.data.strCoverImageUrl,
+                                  width: 315,
+                                  alignment: Alignment.center,
+                                ),
                               )
                             ]);
                           } else if (snapshot.hasError) {
