@@ -64,13 +64,23 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Future<JsonItchioGame> futureItchioGame;
+  bool _bHovering = false;
+  String strCurrentGameHovered = '';
+  final nonHoverTransform = Matrix4.identity()..translate(0, 0, 0);
+  final hoverTransform = Matrix4.identity()..translate(0, -10, 0);
 
-  _launchURL(url) async {
+  void _launchURL(url) async {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
       throw 'It was not possible to open $url.';
     }
+  }
+
+  void _mouseEnter(bool mouseIn) {
+    setState(() {
+      _bHovering = mouseIn;
+    });
   }
 
   @override
@@ -117,16 +127,32 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(16.0),
-                                child: MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      _launchURL(snapshot.data.strGameUrl);
+                                child: AnimatedContainer(
+                                  duration: const Duration(milliseconds: 200),
+                                  transform: _bHovering &&
+                                          snapshot.data.strTitle ==
+                                              strCurrentGameHovered
+                                      ? hoverTransform
+                                      : nonHoverTransform,
+                                  child: MouseRegion(
+                                    onEnter: (e) {
+                                      _mouseEnter(true);
+                                      strCurrentGameHovered =
+                                          snapshot.data.strTitle;
                                     },
-                                    child: Image.network(
-                                      snapshot.data.strCoverImageUrl,
-                                      width: 315,
-                                      alignment: Alignment.center,
+                                    onExit: (e) {
+                                      _mouseEnter(false);
+                                    },
+                                    cursor: SystemMouseCursors.click,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        _launchURL(snapshot.data.strGameUrl);
+                                      },
+                                      child: Image.network(
+                                        snapshot.data.strCoverImageUrl,
+                                        width: 315,
+                                        alignment: Alignment.center,
+                                      ),
                                     ),
                                   ),
                                 ),
