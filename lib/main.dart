@@ -1,10 +1,12 @@
 // HIDE ITCH.IO API KEY
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as dartConvert;
 
 import 'package:responsive_grid/responsive_grid.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(MyApp());
 
@@ -63,6 +65,14 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   Future<JsonItchioGame> futureItchioGame;
 
+  _launchURL(url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'It was not possible to open $url.';
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -106,13 +116,21 @@ class _MyHomePageState extends State<MyHomePage> {
                                 textAlign: TextAlign.center,
                               ),
                               ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: Image.network(
-                                  snapshot.data.strCoverImageUrl,
-                                  width: 315,
-                                  alignment: Alignment.center,
+                                borderRadius: BorderRadius.circular(16.0),
+                                child: MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      _launchURL(snapshot.data.strGameUrl);
+                                    },
+                                    child: Image.network(
+                                      snapshot.data.strCoverImageUrl,
+                                      width: 315,
+                                      alignment: Alignment.center,
+                                    ),
+                                  ),
                                 ),
-                              )
+                              ),
                             ]);
                           } else if (snapshot.hasError) {
                             return SelectableText(
@@ -137,6 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class JsonItchioGame {
+  final String strGameUrl;
   final String strTitle; // Game name
   final bool bSale;
   final String strCoverImageUrl;
@@ -144,14 +163,16 @@ class JsonItchioGame {
   final String strPrice;
 
   JsonItchioGame(
-      {this.strTitle,
+      {this.strGameUrl,
+      this.strTitle,
       this.bSale,
       this.strCoverImageUrl,
       this.bOriginalPrice,
       this.strPrice});
 
-  factory JsonItchioGame.fromJson(Map<String, dynamic> json) {
+  factory JsonItchioGame.fromJson(String gameUrl, Map<String, dynamic> json) {
     return JsonItchioGame(
+        strGameUrl: gameUrl,
         strTitle: json['title'],
         bSale: json['sale'],
         strCoverImageUrl: json['cover_image'],
@@ -161,12 +182,13 @@ class JsonItchioGame {
 }
 
 Future<JsonItchioGame> fetchItchioGameData(String strGameName) async {
-  String apiUrl = 'https://escada-games.itch.io/' + strGameName + '/data.json';
+  String gameUrl = 'https://escada-games.itch.io/' + strGameName;
+  String apiUrl = gameUrl + '/data.json';
   final response = await http.get(apiUrl);
 
   if (response.statusCode == 200) {
     var responseBody = dartConvert.jsonDecode(response.body);
-    return JsonItchioGame.fromJson(responseBody);
+    return JsonItchioGame.fromJson(gameUrl, responseBody);
   } else {
     throw Exception('Erro: falha em obter dados da API do itch.io.');
   }
