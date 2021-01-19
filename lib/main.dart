@@ -93,15 +93,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ResponsiveGridList(
                   desiredItemWidth: 128,
                   minSpacing: 16,
-                  // child: GridView.count(
-                  //   crossAxisCount: 5,
-                  //   padding: EdgeInsets.all(128),
-                  //   mainAxisSpacing: 16.0,
-                  //   crossAxisSpacing: 16.0,
-                  //   shrinkWrap: true,
-
-                  // scrollDirection: Axis.vertical,
-                  // shrinkWrap: true,
                   children: [
                     for (Future<JsonItchioGame> futureGame
                         in widget.lFutureGames)
@@ -135,39 +126,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-
-            // GridView.count(
-            //   crossAxisCount: 2,
-            //   children: [
-            //     for (Future<JsonItchioGame> futureGame in widget.lFutureGames)
-            //       FutureBuilder<JsonItchioGame>(
-            //         future: futureGame,
-            //         builder: (context, snapshot) {
-            //           if (snapshot.hasData) {
-            //             return SelectableText(snapshot.data.strTitle);
-            //           } else if (snapshot.hasError) {
-            //             return SelectableText(
-            //                 "${snapshot.error}\nErro no snapshot.");
-            //           } else {
-            //             return CircularProgressIndicator();
-            //           }
-            //         },
-            //       )
-            //   ],
-            // ),
-
-            // FutureBuilder<JsonItchioGame>(
-            //   future: futureItchioGame,
-            //   builder: (context, snapshot) {
-            //     if (snapshot.hasData) {
-            //       return SelectableText(snapshot.data.strTitle);
-            //     } else if (snapshot.hasError) {
-            //       return SelectableText("${snapshot.error}\nErro no snapshot.");
-            //     } else {
-            //       return CircularProgressIndicator();
-            //     }
-            //   },
-            // ),
+            SizedBox(
+              height: 8,
+            ),
           ],
         ),
       ),
@@ -205,8 +166,6 @@ Future<JsonItchioGame> fetchItchioGameData(String strGameName) async {
 
   if (response.statusCode == 200) {
     var responseBody = dartConvert.jsonDecode(response.body);
-    print(apiUrl);
-    print(responseBody);
     return JsonItchioGame.fromJson(responseBody);
   } else {
     throw Exception('Erro: falha em obter dados da API do itch.io.');
