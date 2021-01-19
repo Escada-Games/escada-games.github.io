@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as dartConvert;
 
+import 'package:responsive_grid/responsive_grid.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -88,12 +90,15 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Expanded(
               child: Scrollbar(
-                child: GridView.count(
-                  crossAxisCount: 5,
-                  padding: EdgeInsets.all(128),
-                  mainAxisSpacing: 16.0,
-                  crossAxisSpacing: 16.0,
-                  shrinkWrap: true,
+                child: ResponsiveGridList(
+                  desiredItemWidth: 128,
+                  minSpacing: 16,
+                  // child: GridView.count(
+                  //   crossAxisCount: 5,
+                  //   padding: EdgeInsets.all(128),
+                  //   mainAxisSpacing: 16.0,
+                  //   crossAxisSpacing: 16.0,
+                  //   shrinkWrap: true,
 
                   // scrollDirection: Axis.vertical,
                   // shrinkWrap: true,
