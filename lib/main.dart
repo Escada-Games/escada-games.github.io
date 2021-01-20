@@ -120,44 +120,48 @@ class _MyHomePageState extends State<MyHomePage> {
                         future: futureGame,
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
-                            return Column(children: [
-                              SelectableText(
-                                snapshot.data.strTitle,
-                                textAlign: TextAlign.center,
-                              ),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(16.0),
-                                child: AnimatedContainer(
-                                  duration: const Duration(milliseconds: 200),
-                                  transform: _bHovering &&
-                                          snapshot.data.strTitle ==
-                                              strCurrentGameHovered
-                                      ? hoverTransform
-                                      : nonHoverTransform,
-                                  child: MouseRegion(
-                                    onEnter: (e) {
-                                      _mouseEnter(true);
-                                      strCurrentGameHovered =
-                                          snapshot.data.strTitle;
-                                    },
-                                    onExit: (e) {
-                                      _mouseEnter(false);
-                                    },
-                                    cursor: SystemMouseCursors.click,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        _launchURL(snapshot.data.strGameUrl);
-                                      },
-                                      child: Image.network(
-                                        snapshot.data.strCoverImageUrl,
-                                        width: 315,
-                                        alignment: Alignment.center,
+                            return AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              transform: _bHovering &&
+                                      snapshot.data.strTitle ==
+                                          strCurrentGameHovered
+                                  ? hoverTransform
+                                  : nonHoverTransform,
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SelectableText(
+                                      snapshot.data.strTitle,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(16.0),
+                                      child: MouseRegion(
+                                        onEnter: (e) {
+                                          _mouseEnter(true);
+                                          strCurrentGameHovered =
+                                              snapshot.data.strTitle;
+                                        },
+                                        onExit: (e) {
+                                          _mouseEnter(false);
+                                        },
+                                        cursor: SystemMouseCursors.click,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            _launchURL(
+                                                snapshot.data.strGameUrl);
+                                          },
+                                          child: Image.network(
+                                            snapshot.data.strCoverImageUrl,
+                                            width: 315,
+                                            alignment: Alignment.center,
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                              ),
-                            ]);
+                                  ]),
+                            );
                           } else if (snapshot.hasError) {
                             return SelectableText(
                                 "${snapshot.error}\nErro no snapshot.");
