@@ -96,7 +96,44 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        elevation: 0.0,
+        backgroundColor: Colors.black,
+        title: Row(
+          children: [
+            IconButton(
+              icon: Icon(
+                Icons.stairs_outlined,
+                size: 32,
+              ),
+              onPressed: () {
+                ;
+              },
+            ),
+            SizedBox(
+              width: 8,
+            ),
+            Text(widget.title),
+            SizedBox(
+              width: 16,
+            ),
+            IconButton(
+              icon: Icon(Icons.home),
+              padding: EdgeInsets.all(16),
+              tooltip: 'Homepage',
+              onPressed: () {
+                ;
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.games),
+              padding: EdgeInsets.all(16),
+              tooltip: 'Our games',
+              onPressed: () {
+                ;
+              },
+            )
+          ],
+        ),
       ),
       body: Center(
         child: Column(
@@ -111,8 +148,8 @@ class _MyHomePageState extends State<MyHomePage> {
             Expanded(
               child: Scrollbar(
                 child: ResponsiveGridList(
-                  desiredItemWidth: 128,
-                  minSpacing: 16,
+                  desiredItemWidth: 256,
+                  minSpacing: 32,
                   children: [
                     for (Future<JsonItchioGame> futureGame
                         in widget.lFutureGames)
