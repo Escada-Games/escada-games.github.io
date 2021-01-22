@@ -106,6 +106,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 Icons.stairs_outlined,
                 size: 32,
               ),
+              padding: EdgeInsets.all(16),
+              alignment: Alignment.topCenter,
+              tooltip: 'Homepage',
               onPressed: () {
                 ;
               },
@@ -113,102 +116,143 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(
               width: 8,
             ),
-            Text(widget.title),
+            Text(
+              widget.title,
+              textAlign: TextAlign.center,
+            ),
             SizedBox(
               width: 16,
             ),
+            // IconButton(
+            //   icon: Icon(Icons.home),
+            //   padding: EdgeInsets.all(16),
+            //   tooltip: 'Homepage',
+            //   onPressed: () {
+            //     ;
+            //   },
+            // ),
             IconButton(
-              icon: Icon(Icons.home),
-              padding: EdgeInsets.all(16),
-              tooltip: 'Homepage',
-              onPressed: () {
-                ;
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.games),
+              icon: Icon(
+                Icons.games,
+                size: 32,
+              ),
               padding: EdgeInsets.all(16),
               tooltip: 'Our games',
               onPressed: () {
                 ;
               },
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.help,
+                size: 32,
+              ),
+              padding: EdgeInsets.all(16),
+              tooltip: 'About us',
+              onPressed: () {
+                ;
+              },
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.email,
+                size: 32,
+              ),
+              padding: EdgeInsets.all(16),
+              tooltip: 'Contact',
+              onPressed: () {
+                ;
+              },
+            ),
+            SizedBox(
+              width: 16,
             )
           ],
         ),
       ),
-      body: Center(
+      body: Container(
+        alignment: Alignment.center,
+        margin: EdgeInsets.fromLTRB(64, 8, 64, 8),
+        padding: EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SelectableText(
               'Nossos jogos:',
+              style: TextStyle(fontSize: 64, fontWeight: FontWeight.bold),
             ),
             SizedBox(
-              height: 8,
+              height: 16,
             ),
-            Expanded(
-              child: Scrollbar(
-                child: ResponsiveGridList(
-                  desiredItemWidth: 256,
-                  minSpacing: 32,
-                  children: [
-                    for (Future<JsonItchioGame> futureGame
-                        in widget.lFutureGames)
-                      FutureBuilder<JsonItchioGame>(
-                        future: futureGame,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return AnimatedContainer(
-                              duration: const Duration(milliseconds: 200),
-                              transform: _bHovering &&
-                                      snapshot.data.strTitle ==
-                                          strCurrentGameHovered
-                                  ? hoverTransform
-                                  : nonHoverTransform,
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SelectableText(
-                                      snapshot.data.strTitle,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(16.0),
-                                      child: MouseRegion(
-                                        onEnter: (e) {
-                                          _mouseEnter(true);
-                                          strCurrentGameHovered =
-                                              snapshot.data.strTitle;
-                                        },
-                                        onExit: (e) {
-                                          _mouseEnter(false);
-                                        },
-                                        cursor: SystemMouseCursors.click,
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            _launchURL(
-                                                snapshot.data.strGameUrl);
+            Flexible(
+              fit: FlexFit.loose,
+              child: Card(
+                margin: EdgeInsets.all(16),
+                child: Scrollbar(
+                  child: ResponsiveGridList(
+                    desiredItemWidth: 256,
+                    minSpacing: 32,
+                    children: [
+                      for (Future<JsonItchioGame> futureGame
+                          in widget.lFutureGames)
+                        FutureBuilder<JsonItchioGame>(
+                          future: futureGame,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return AnimatedContainer(
+                                duration: const Duration(milliseconds: 200),
+                                transform: _bHovering &&
+                                        snapshot.data.strTitle ==
+                                            strCurrentGameHovered
+                                    ? hoverTransform
+                                    : nonHoverTransform,
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      SelectableText(
+                                        snapshot.data.strTitle,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(16.0),
+                                        child: MouseRegion(
+                                          onEnter: (e) {
+                                            _mouseEnter(true);
+                                            strCurrentGameHovered =
+                                                snapshot.data.strTitle;
                                           },
-                                          child: Image.network(
-                                            snapshot.data.strCoverImageUrl,
-                                            width: 315,
-                                            alignment: Alignment.center,
+                                          onExit: (e) {
+                                            _mouseEnter(false);
+                                          },
+                                          cursor: SystemMouseCursors.click,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              _launchURL(
+                                                  snapshot.data.strGameUrl);
+                                            },
+                                            child: Image.network(
+                                              snapshot.data.strCoverImageUrl,
+                                              width: 315,
+                                              alignment: Alignment.center,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ]),
-                            );
-                          } else if (snapshot.hasError) {
-                            return SelectableText(
-                                "${snapshot.error}\nErro no snapshot.");
-                          } else {
-                            return CircularProgressIndicator();
-                          }
-                        },
-                      )
-                  ],
+                                    ]),
+                              );
+                            } else if (snapshot.hasError) {
+                              return SelectableText(
+                                  "${snapshot.error}\nErro no snapshot.");
+                            } else {
+                              return CircularProgressIndicator();
+                            }
+                          },
+                        )
+                    ],
+                  ),
                 ),
               ),
             ),
