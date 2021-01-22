@@ -207,43 +207,53 @@ class _MyHomePageState extends State<MyHomePage> {
                                             strCurrentGameHovered
                                     ? hoverTransform
                                     : nonHoverTransform,
-                                child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      SelectableText(
-                                        snapshot.data.strTitle,
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(16.0),
-                                        child: MouseRegion(
-                                          onEnter: (e) {
-                                            _mouseEnter(true);
-                                            strCurrentGameHovered =
-                                                snapshot.data.strTitle;
-                                          },
-                                          onExit: (e) {
-                                            _mouseEnter(false);
-                                          },
-                                          cursor: SystemMouseCursors.click,
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              _launchURL(
-                                                  snapshot.data.strGameUrl);
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16.0),
+                                  ),
+                                  margin: EdgeInsets.all(8),
+                                  elevation: 8,
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          height: 8.0,
+                                        ),
+                                        SelectableText(
+                                          snapshot.data.strTitle,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(16.0),
+                                          child: MouseRegion(
+                                            onEnter: (e) {
+                                              _mouseEnter(true);
+                                              strCurrentGameHovered =
+                                                  snapshot.data.strTitle;
                                             },
-                                            child: Image.network(
-                                              snapshot.data.strCoverImageUrl,
-                                              width: 315,
-                                              alignment: Alignment.center,
+                                            onExit: (e) {
+                                              _mouseEnter(false);
+                                            },
+                                            cursor: SystemMouseCursors.click,
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                _launchURL(
+                                                    snapshot.data.strGameUrl);
+                                              },
+                                              child: Image.network(
+                                                snapshot.data.strCoverImageUrl,
+                                                width: 315,
+                                                alignment: Alignment.center,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ]),
+                                      ]),
+                                ),
                               );
                             } else if (snapshot.hasError) {
                               return SelectableText(
