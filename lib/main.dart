@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Escada Games',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'Montserrat',
       ),
       home: MyHomePage(title: 'Escada Games'),
     );
