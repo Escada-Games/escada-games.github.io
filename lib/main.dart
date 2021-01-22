@@ -187,6 +187,9 @@ class _MyHomePageState extends State<MyHomePage> {
             Flexible(
               fit: FlexFit.loose,
               child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
                 margin: EdgeInsets.all(16),
                 child: Scrollbar(
                   child: ResponsiveGridList(
