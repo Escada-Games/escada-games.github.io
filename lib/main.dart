@@ -136,6 +136,30 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             IconButton(
               icon: Icon(
+                Icons.videogame_asset,
+                size: 32,
+                color: Color.fromRGBO(241, 89, 82, 1.0),
+              ),
+              padding: EdgeInsets.all(16),
+              tooltip: 'Our itch.io page',
+              onPressed: () {
+                _launchURL('https://escada-games.itch.io');
+              },
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.videogame_asset,
+                size: 32,
+                color: Color.fromRGBO(41, 121, 255, 1.0),
+              ),
+              padding: EdgeInsets.all(16),
+              tooltip: 'Our gotm.io page',
+              onPressed: () {
+                _launchURL('https://gotm.io/escada-games');
+              },
+            ),
+            IconButton(
+              icon: Icon(
                 Icons.help,
                 size: 32,
               ),
