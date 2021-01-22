@@ -192,6 +192,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: ResponsiveGridList(
                     desiredItemWidth: 256,
                     minSpacing: 32,
+                    squareCells: true,
                     children: [
                       for (Future<JsonItchioGame> futureGame
                           in widget.lFutureGames)
@@ -207,7 +208,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ? hoverTransform
                                     : nonHoverTransform,
                                 child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
