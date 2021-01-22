@@ -225,10 +225,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                         SizedBox(
                                           height: 8.0,
                                         ),
-                                        SelectableText(
-                                          snapshot.data.strTitle,
-                                          textAlign: TextAlign.center,
-                                        ),
+                                        SelectableText(snapshot.data.strTitle,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w700,
+                                            )),
                                         ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(16.0),
