@@ -65,10 +65,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Future<JsonItchioGame> futureItchioGame;
-  bool _bHovering = false;
-  String strCurrentGameHovered = '';
-  final nonHoverTransform = Matrix4.identity()..translate(0, 0, 0);
-  final hoverTransform = Matrix4.identity()..translate(0, -10, 0);
 
   void _launchURL(url) async {
     if (await canLaunch(url)) {
@@ -76,12 +72,6 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       throw 'It was not possible to open $url.';
     }
-  }
-
-  void _mouseEnter(bool mouseIn) {
-    setState(() {
-      _bHovering = mouseIn;
-    });
   }
 
   @override
