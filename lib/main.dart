@@ -123,14 +123,6 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(
               width: 16,
             ),
-            // IconButton(
-            //   icon: Icon(Icons.home),
-            //   padding: EdgeInsets.all(16),
-            //   tooltip: 'Homepage',
-            //   onPressed: () {
-            //     ;
-            //   },
-            // ),
             IconButton(
               icon: Icon(
                 Icons.games,
@@ -264,7 +256,9 @@ class _MyHomePageState extends State<MyHomePage> {
                               return SelectableText(
                                   "${snapshot.error}\nErro no snapshot.");
                             } else {
-                              return CircularProgressIndicator();
+                              return Flexible(
+                                  fit: FlexFit.loose,
+                                  child: CircularProgressIndicator());
                             }
                           },
                         )
@@ -278,6 +272,89 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class GameWidget extends StatefulWidget {
+  final String strTitle;
+  final String strGameUrl;
+  final String strCoverImageUrl;
+
+  final Matrix4 nonHoverTransform = Matrix4.identity()..translate(0, 0, 0);
+  final Matrix4 hoverTransform = Matrix4.identity()..translate(0, -10, 0);
+
+  GameWidget({this.strTitle, this.strGameUrl, this.strCoverImageUrl});
+  factory GameWidget.fromSnapshotData(AsyncSnapshot<JsonItchioGame> snapshot) {
+    return GameWidget(
+        strTitle: snapshot.data.strTitle,
+        strGameUrl: snapshot.data.strGameUrl,
+        strCoverImageUrl: snapshot.data.strCoverImageUrl);
+  }
+
+  @override
+  _GameWidgetState createState() => _GameWidgetState();
+}
+
+class _GameWidgetState extends State<GameWidget> {
+  bool _bHovering = false;
+
+  void _launchURL(url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'It was not possible to open $url.';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      transform: _bHovering ? widget.hoverTransform : widget.nonHoverTransform,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        margin: EdgeInsets.all(8),
+        elevation: 8,
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 8.0,
+              ),
+              SelectableText(widget.strTitle,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                  )),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16.0),
+                child: MouseRegion(
+                  onEnter: (e) {
+                    _bHovering = true;
+                  },
+                  onExit: (e) {
+                    _bHovering = false;
+                  },
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () {
+                      _launchURL(widget.strGameUrl);
+                    },
+                    child: Image.network(
+                      widget.strCoverImageUrl,
+                      width: 315,
+                      alignment: Alignment.center,
+                    ),
+                  ),
+                ),
+              ),
+            ]),
       ),
     );
   }
