@@ -287,7 +287,7 @@ class _GameWidgetState extends State<GameWidget> {
                     SizedBox(
                       height: 8.0,
                     ),
-                    SelectableText(widget.strTitle,
+                    Text(widget.strTitle,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16,
