@@ -195,7 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           future: futureGame,
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
-                              return GameWidget.fromSnapshotData(snapshot);
+                              return GameCard.fromSnapshotData(snapshot);
                             } else if (snapshot.hasError) {
                               return SelectableText(
                                   "${snapshot.error}\nErro no snapshot.");
@@ -221,7 +221,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class GameWidget extends StatefulWidget {
+class GameCard extends StatefulWidget {
   final String strTitle;
   final String strGameUrl;
   final String strCoverImageUrl;
@@ -229,19 +229,19 @@ class GameWidget extends StatefulWidget {
   final Matrix4 nonHoverTransform = Matrix4.identity()..translate(0, 0, 0);
   final Matrix4 hoverTransform = Matrix4.identity()..translate(0, -10, 0);
 
-  GameWidget({this.strTitle, this.strGameUrl, this.strCoverImageUrl});
-  factory GameWidget.fromSnapshotData(AsyncSnapshot<JsonItchioGame> snapshot) {
-    return GameWidget(
+  GameCard({this.strTitle, this.strGameUrl, this.strCoverImageUrl});
+  factory GameCard.fromSnapshotData(AsyncSnapshot<JsonItchioGame> snapshot) {
+    return GameCard(
         strTitle: snapshot.data.strTitle,
         strGameUrl: snapshot.data.strGameUrl,
         strCoverImageUrl: snapshot.data.strCoverImageUrl);
   }
 
   @override
-  _GameWidgetState createState() => _GameWidgetState();
+  _GameCardState createState() => _GameCardState();
 }
 
-class _GameWidgetState extends State<GameWidget> {
+class _GameCardState extends State<GameCard> {
   bool _bHovering = false;
 
   void _launchURL(url) async {
