@@ -280,10 +280,14 @@ class _GameWidgetState extends State<GameWidget> {
                 borderRadius: BorderRadius.circular(16.0),
                 child: MouseRegion(
                   onEnter: (e) {
-                    _bHovering = true;
+                    setState(() {
+                      _bHovering = true;
+                    });
                   },
                   onExit: (e) {
-                    _bHovering = false;
+                    setState(() {
+                      _bHovering = false;
+                    });
                   },
                   cursor: SystemMouseCursors.click,
                   child: GestureDetector(
