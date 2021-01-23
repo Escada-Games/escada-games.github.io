@@ -199,7 +199,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 margin: EdgeInsets.all(16),
                 child: Scrollbar(
                   child: ResponsiveGridList(
-                    desiredItemWidth: 256,
+                    desiredItemWidth: MediaQuery.of(context).size.width > 256
+                        ? 256
+                        : MediaQuery.of(context).size.width / 2,
                     minSpacing: 32,
                     squareCells: true,
                     children: [
@@ -269,75 +271,78 @@ class _GameCardState extends State<GameCard> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        transform:
-            _bHovering ? widget.hoverTransform : widget.nonHoverTransform,
-        child: MouseRegion(
-          onEnter: (e) {
-            setState(() {
-              _bHovering = true;
-            });
-          },
-          onExit: (e) {
-            setState(() {
-              _bHovering = false;
-            });
-          },
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: () {
-              _launchURL(widget.strGameUrl);
+    return AspectRatio(
+      aspectRatio: 1,
+      child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          transform:
+              _bHovering ? widget.hoverTransform : widget.nonHoverTransform,
+          child: MouseRegion(
+            onEnter: (e) {
+              setState(() {
+                _bHovering = true;
+              });
             },
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16.0),
-              ),
-              margin: EdgeInsets.all(8),
-              elevation: 8,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    Text(widget.strTitle,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                        )),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(16.0),
-                      child: MouseRegion(
-                        onEnter: (e) {
-                          setState(() {
-                            _bHovering = true;
-                          });
-                        },
-                        onExit: (e) {
-                          setState(() {
-                            _bHovering = false;
-                          });
-                        },
-                        cursor: SystemMouseCursors.click,
-                        child: GestureDetector(
-                          onTap: () {
-                            _launchURL(widget.strGameUrl);
+            onExit: (e) {
+              setState(() {
+                _bHovering = false;
+              });
+            },
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: () {
+                _launchURL(widget.strGameUrl);
+              },
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                margin: EdgeInsets.all(8),
+                elevation: 8,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 8.0,
+                      ),
+                      Text(widget.strTitle,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          )),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(16.0),
+                        child: MouseRegion(
+                          onEnter: (e) {
+                            setState(() {
+                              _bHovering = true;
+                            });
                           },
-                          child: Image.network(
-                            widget.strCoverImageUrl,
-                            width: 315,
-                            alignment: Alignment.center,
+                          onExit: (e) {
+                            setState(() {
+                              _bHovering = false;
+                            });
+                          },
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
+                            onTap: () {
+                              _launchURL(widget.strGameUrl);
+                            },
+                            child: Image.network(
+                              widget.strCoverImageUrl,
+                              width: 315,
+                              alignment: Alignment.center,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ]),
+                    ]),
+              ),
             ),
-          ),
-        ));
+          )),
+    );
   }
 }
 
