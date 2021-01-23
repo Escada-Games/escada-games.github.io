@@ -214,9 +214,10 @@ class _MyHomePageState extends State<MyHomePage> {
                               return SelectableText(
                                   "${snapshot.error}\nErro no snapshot.");
                             } else {
-                              return Flexible(
-                                  fit: FlexFit.loose,
-                                  child: CircularProgressIndicator());
+                              return CircularProgressIndicator();
+                              // return Flexible(
+                              //     fit: FlexFit.loose,
+                              //     child: CircularProgressIndicator());
                             }
                           },
                         )
