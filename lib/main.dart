@@ -65,6 +65,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Future<JsonItchioGame> futureItchioGame;
+  String currentPage = 'home';
 
   void _launchURL(url) async {
     if (await canLaunch(url)) {
@@ -179,8 +180,14 @@ class _MyHomePageState extends State<MyHomePage> {
               : [],
         ),
       ),
-      body: ScreenAllGames(
-        widget: widget,
+      body: Container(
+        alignment: Alignment.center,
+        margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
+        padding: EdgeInsets.all(8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[],
+        ),
       ),
     );
   }
