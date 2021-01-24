@@ -7,6 +7,7 @@ import 'dart:convert' as dartConvert;
 
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 void main() => runApp(MyApp());
 
@@ -186,7 +187,14 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: EdgeInsets.all(8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[],
+          children: <Widget>[
+            CarouselSlider(
+                items: [Text('a'), Text('b')],
+                options: CarouselOptions(
+                  autoPlay: true,
+                  aspectRatio: 16 / 9,
+                ))
+          ],
         ),
       ),
     );
