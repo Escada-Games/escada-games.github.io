@@ -58,7 +58,17 @@ class MyHomePage extends StatefulWidget {
     'zeitmeister'
   ];
 
+  List<String> lMostPopular = [
+    'diver-down',
+    'pigeon-ascent',
+    'pickaxe-tower',
+    'ticaruga',
+    'delay-mage',
+    'blackened'
+  ];
+
   List<dynamic> lFutureGames = [];
+  List<dynamic> lFutureMostPopular = [];
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -79,9 +89,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    futureItchioGame = fetchItchioGameData('diver-down');
     for (String game in widget.lGameList) {
       widget.lFutureGames.add(fetchItchioGameData(game));
+    }
+    for (String game in widget.lMostPopular) {
+      widget..lFutureMostPopular.add(fetchItchioGameData(game));
     }
   }
 
@@ -181,21 +193,36 @@ class _MyHomePageState extends State<MyHomePage> {
               : [],
         ),
       ),
-      body: Container(
-        alignment: Alignment.center,
-        margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
-        padding: EdgeInsets.all(8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            CarouselSlider(
-                items: [Text('a'), Text('b')],
-                options: CarouselOptions(
-                  autoPlay: true,
-                  aspectRatio: 16 / 9,
-                ))
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          CarouselSlider(
+              items: [
+                for (Future<JsonItchioGame> futureGame
+                    in widget.lFutureMostPopular)
+                  FutureBuilder<JsonItchioGame>(
+                    future: futureGame,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Image.network(snapshot.data
+                            .strCoverImageUrl); //GameCard.fromSnapshotData(snapshot);
+                      } else if (snapshot.hasError) {
+                        return SelectableText(
+                            "${snapshot.error}\nErro no snapshot.");
+                      } else {
+                        return CircularProgressIndicator();
+                        // return Flexible(
+                        //     fit: FlexFit.loose,
+                        //     child: CircularProgressIndicator());
+                      }
+                    },
+                  )
+              ],
+              options: CarouselOptions(
+                autoPlay: true,
+                aspectRatio: 16 / 9,
+              ))
+        ],
       ),
     );
   }
