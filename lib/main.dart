@@ -204,8 +204,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     future: futureGame,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        return Image.network(snapshot.data
-                            .strCoverImageUrl); //GameCard.fromSnapshotData(snapshot);
+                        return Image.network(snapshot.data.strCoverImageUrl,
+                            alignment: Alignment.center,
+                            fit: BoxFit
+                                .contain); //GameCard.fromSnapshotData(snapshot);
                       } else if (snapshot.hasError) {
                         return SelectableText(
                             "${snapshot.error}\nErro no snapshot.");
@@ -219,9 +221,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   )
               ],
               options: CarouselOptions(
-                autoPlay: true,
-                aspectRatio: 16 / 9,
-              ))
+                  autoPlay: true, aspectRatio: 16 / 9, height: 200)),
+          Spacer(),
         ],
       ),
     );
