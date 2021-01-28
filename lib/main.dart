@@ -101,131 +101,140 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     MediaQueryData queryData = MediaQuery.of(context);
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.black,
-        title: Row(
-          children: queryData.size.width > 600
-              ? [
-                  IconButton(
-                    icon: Icon(
-                      Icons.stairs_outlined,
-                      size: 32,
+        appBar: AppBar(
+          elevation: 0.0,
+          backgroundColor: Colors.black,
+          title: Row(
+            children: queryData.size.width > 600
+                ? [
+                    IconButton(
+                      icon: Icon(
+                        Icons.stairs_outlined,
+                        size: 32,
+                      ),
+                      padding: EdgeInsets.all(16),
+                      alignment: Alignment.topCenter,
+                      tooltip: 'Homepage',
+                      onPressed: () {
+                        ;
+                      },
                     ),
-                    padding: EdgeInsets.all(16),
-                    alignment: Alignment.topCenter,
-                    tooltip: 'Homepage',
-                    onPressed: () {
-                      ;
-                    },
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    widget.title,
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.games,
-                      size: 32,
+                    SizedBox(
+                      width: 8,
                     ),
-                    padding: EdgeInsets.all(16),
-                    tooltip: 'Our games',
-                    onPressed: () {
-                      ;
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.videogame_asset,
-                      size: 32,
-                      color: Color.fromRGBO(241, 89, 82, 1.0),
+                    Text(
+                      widget.title,
+                      textAlign: TextAlign.center,
                     ),
-                    padding: EdgeInsets.all(16),
-                    tooltip: 'Our itch.io page',
-                    onPressed: () {
-                      _launchURL('https://escada-games.itch.io');
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.videogame_asset,
-                      size: 32,
-                      color: Color.fromRGBO(41, 121, 255, 1.0),
+                    SizedBox(
+                      width: 16,
                     ),
-                    padding: EdgeInsets.all(16),
-                    tooltip: 'Our gotm.io page',
-                    onPressed: () {
-                      _launchURL('https://gotm.io/escada-games');
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.help,
-                      size: 32,
+                    IconButton(
+                      icon: Icon(
+                        Icons.games,
+                        size: 32,
+                      ),
+                      padding: EdgeInsets.all(16),
+                      tooltip: 'Our games',
+                      onPressed: () {
+                        ;
+                      },
                     ),
-                    padding: EdgeInsets.all(16),
-                    tooltip: 'About us',
-                    onPressed: () {
-                      ;
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.email,
-                      size: 32,
+                    IconButton(
+                      icon: Icon(
+                        Icons.videogame_asset,
+                        size: 32,
+                        color: Color.fromRGBO(241, 89, 82, 1.0),
+                      ),
+                      padding: EdgeInsets.all(16),
+                      tooltip: 'Our itch.io page',
+                      onPressed: () {
+                        _launchURL('https://escada-games.itch.io');
+                      },
                     ),
-                    padding: EdgeInsets.all(16),
-                    tooltip: 'Contact',
-                    onPressed: () {
-                      ;
-                    },
-                  ),
-                  SizedBox(
-                    width: 16,
-                  )
-                ]
-              : [],
+                    IconButton(
+                      icon: Icon(
+                        Icons.videogame_asset,
+                        size: 32,
+                        color: Color.fromRGBO(41, 121, 255, 1.0),
+                      ),
+                      padding: EdgeInsets.all(16),
+                      tooltip: 'Our gotm.io page',
+                      onPressed: () {
+                        _launchURL('https://gotm.io/escada-games');
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.help,
+                        size: 32,
+                      ),
+                      padding: EdgeInsets.all(16),
+                      tooltip: 'About us',
+                      onPressed: () {
+                        ;
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.email,
+                        size: 32,
+                      ),
+                      padding: EdgeInsets.all(16),
+                      tooltip: 'Contact',
+                      onPressed: () {
+                        ;
+                      },
+                    ),
+                    SizedBox(
+                      width: 16,
+                    )
+                  ]
+                : [],
+          ),
         ),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          CarouselSlider(
-              items: [
-                for (Future<JsonItchioGame> futureGame
-                    in widget.lFutureMostPopular)
-                  FutureBuilder<JsonItchioGame>(
-                    future: futureGame,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Image.network(snapshot.data.strCoverImageUrl,
-                            alignment: Alignment.center,
-                            fit: BoxFit
-                                .contain); //GameCard.fromSnapshotData(snapshot);
-                      } else if (snapshot.hasError) {
-                        return SelectableText(
-                            "${snapshot.error}\nErro no snapshot.");
-                      } else {
-                        return CircularProgressIndicator();
-                        // return Flexible(
-                        //     fit: FlexFit.loose,
-                        //     child: CircularProgressIndicator());
-                      }
-                    },
-                  )
-              ],
-              options: CarouselOptions(
-                  autoPlay: true, aspectRatio: 16 / 9, height: 200)),
-          Spacer(),
-        ],
-      ),
-    );
+        body: Stack(children: [
+          Container(
+            color: Colors.black,
+          ),
+          Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: 16),
+                Center(
+                  child: SelectableText('Escada Games',
+                      style: TextStyle(
+                          fontSize: 64,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          backgroundColor: Colors.black)),
+                ),
+                Center(
+                  child: SelectableText(
+                      'A small brazilian indie game development group',
+                      style: TextStyle(
+                          fontSize: 16,
+                          // fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          backgroundColor: Colors.black)),
+                ),
+                SizedBox(height: 16),
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(32, 0, 32, 0),
+                    padding: EdgeInsets.fromLTRB(128, 0, 128, 0),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(128),
+                            topRight: Radius.circular(128)),
+                        color: Colors.white),
+                    child: SelectableText('a'),
+                  ),
+                )
+              ]),
+        ]));
   }
 }
 
