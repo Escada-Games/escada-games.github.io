@@ -230,7 +230,16 @@ class _MyHomePageState extends State<MyHomePage> {
                             topLeft: Radius.circular(128),
                             topRight: Radius.circular(128)),
                         color: Colors.white),
-                    child: SelectableText('a'),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SelectableText(
+                        'Bem-vindo ao website da Escada Games!\nNão temos muita coisa nesta página aqui, mas você pode ver mais sobre nossos projetos apertando os botões ali em cima, na NavBar.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 24,
+                        ),
+                      ),
+                    ),
                   ),
                 )
               ]),
