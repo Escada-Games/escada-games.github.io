@@ -233,7 +233,17 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: SelectableText(
-                        'Bem-vindo ao website da Escada Games!\nNão temos muita coisa nesta página aqui, mas você pode ver mais sobre nossos projetos apertando os botões ali em cima, na NavBar.',
+                        '''Bem-vindo ao website da Escada Games!\n\n\
+                         Nós somos um pequeno grupo de desenvolvedores de jogos brasileiros, no momento mais hobbystas do que qualquer outra coisa.\n\n
+                         Até agora, nossas maiores conquistas foram:\n
+                         - Vencemos a Godot Wild Jam #2 com o jogo Diver Down, dentre outros 28 jogos;\n
+                         - Vencemos a Godot Wild Jam #10 com o jogo Null Dagger, dentre outros 28 jogos;\n
+                         - Alcançamos o 30º lugar na Ludum Dare #46 na categoria humor com o jogo Pigeon Ascent, dentre outros 3576 jogos;\n
+                         - Fomos selecionados para entrar na revista eletrônica online Indieposcalypse, participando com os jogos Diver Down, Pigeon Ascent, e Pickaxe Tower;\n
+                        \n
+                        Nos botões acima, você  pode conferir nossos jogos em diferentes sites. Esperamos que goste deles!\n
+                        Por fim, você pode entrar em contato com a gente mandando um e-mail para escadagames@gmail.com
+                         ''',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 24,
