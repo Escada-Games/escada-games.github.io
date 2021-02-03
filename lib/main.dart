@@ -1,5 +1,6 @@
 // HIDE ITCH.IO API KEY
 // Use this: https://flutter.dev/docs/cookbook/images/fading-in-images
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
@@ -55,7 +56,8 @@ class MyHomePage extends StatefulWidget {
     'ticaruga',
     'wafflegeddon',
     'work-so-that-i-can-get-those-beautiful-pigeons-you-darn-bees',
-    'zeitmeister'
+    'zeitmeister',
+    'wallker-demolition-co'
   ];
 
   List<String> lMostPopular = [
@@ -231,25 +233,67 @@ class _MyHomePageState extends State<MyHomePage> {
                             topRight: Radius.circular(128)),
                         color: Colors.white),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SelectableText(
-                        '''Bem-vindo ao website da Escada Games!\n\n\
-                         Nós somos um pequeno grupo de desenvolvedores de jogos brasileiros, no momento mais hobbystas do que qualquer outra coisa.\n\n
-                         Até agora, nossas maiores conquistas foram:\n
-                         - Vencemos a Godot Wild Jam #2 com o jogo Diver Down, dentre outros 28 jogos;\n
-                         - Vencemos a Godot Wild Jam #10 com o jogo Null Dagger, dentre outros 28 jogos;\n
-                         - Alcançamos o 30º lugar na Ludum Dare #46 na categoria humor com o jogo Pigeon Ascent, dentre outros 3576 jogos;\n
-                         - Fomos selecionados para entrar na revista eletrônica online Indieposcalypse, participando com os jogos Diver Down, Pigeon Ascent, e Pickaxe Tower;\n
-                        \n
-                        Nos botões acima, você  pode conferir nossos jogos em diferentes sites. Esperamos que goste deles!\n
-                        Por fim, você pode entrar em contato com a gente mandando um e-mail para escadagames@gmail.com
-                         ''',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 24,
-                        ),
-                      ),
-                    ),
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text.rich(TextSpan(
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 24,
+                            ),
+                            children: [
+                              WidgetSpan(
+                                  child: Center(
+                                child: Text(
+                                    'Bem-vindo ao website da Escada Games!\n\n',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24)),
+                              )),
+                              TextSpan(
+                                  text:
+                                      "Nós somos um pequeno grupo de desenvolvedores brasileiros de jogos, no momento mais hobbystas do que qualquer outra coisa. Até agora, nossas maiores conquistas foram:\n\n"),
+                              TextSpan(
+                                  text:
+                                      '- Vencemos a Godot Wild Jam #2 com o jogo Diver Down, dentre outros 28 jogos;\n',
+                                  style: TextStyle(color: Colors.blue),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      launch(
+                                          'https://escada-games.itch.io/diver-down');
+                                    }),
+                              TextSpan(
+                                  text:
+                                      '- Vencemos a Godot Wild Jam #10 com o jogo Null Dagger, dentre outros 28 jogos;\n',
+                                  style: TextStyle(color: Colors.blue),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      launch(
+                                          'https://escada-games.itch.io/null-dagger');
+                                    }),
+                              TextSpan(
+                                  text:
+                                      '- Alcançamos o 30º lugar na Ludum Dare #46 na categoria humor com o jogo Pigeon Ascent, dentre outros 3576 jogos;\n',
+                                  style: TextStyle(color: Colors.blue),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      launch(
+                                          'https://escada-games.itch.io/pigeon-ascent');
+                                    }),
+                              TextSpan(
+                                  text:
+                                      '- Fomos selecionados para entrar na revista eletrônica online Indieposcalypse, participando com os jogos Diver Down, Pigeon Ascent, e Pickaxe Tower;\n\n',
+                                  style: TextStyle(color: Colors.blue),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      launch(
+                                          'https://pizzapranks.itch.io/indiepocalypse-11');
+                                    }),
+                              TextSpan(
+                                  text:
+                                      'Nos botões acima, você  pode conferir nossos jogos em diferentes sites. Esperamos que goste deles!\n'),
+                              TextSpan(
+                                  text:
+                                      'Por fim, você pode entrar em contato com a gente mandando um e-mail para escadagames@gmail.com')
+                            ]))),
                   ),
                 )
               ]),
