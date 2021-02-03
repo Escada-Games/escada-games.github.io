@@ -118,7 +118,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       alignment: Alignment.topCenter,
                       tooltip: 'Homepage',
                       onPressed: () {
-                        ;
+                        setState(() {
+                          currentPage = 'home';
+                        });
                       },
                     ),
                     SizedBox(
@@ -139,7 +141,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       padding: EdgeInsets.all(16),
                       tooltip: 'Our games',
                       onPressed: () {
-                        ;
+                        setState(() {
+                          currentPage = 'ourGames';
+                        });
                       },
                     ),
                     IconButton(
@@ -232,72 +236,77 @@ class _MyHomePageState extends State<MyHomePage> {
                             topLeft: Radius.circular(128),
                             topRight: Radius.circular(128)),
                         color: Colors.white),
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text.rich(TextSpan(
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 24,
-                            ),
-                            children: [
-                              WidgetSpan(
-                                  child: Center(
-                                child: Text(
-                                    'Bem-vindo ao website da Escada Games!\n\n',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 24)),
-                              )),
-                              TextSpan(
-                                  text:
-                                      "Nós somos um pequeno grupo de desenvolvedores brasileiros de jogos, no momento mais hobbystas do que qualquer outra coisa. Até agora, nossas maiores conquistas foram:\n\n"),
-                              TextSpan(
-                                  text:
-                                      '- Vencemos a Godot Wild Jam #2 com o jogo Diver Down, dentre outros 28 jogos;\n',
-                                  style: TextStyle(color: Colors.blue),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      launch(
-                                          'https://escada-games.itch.io/diver-down');
-                                    }),
-                              TextSpan(
-                                  text:
-                                      '- Vencemos a Godot Wild Jam #10 com o jogo Null Dagger, dentre outros 28 jogos;\n',
-                                  style: TextStyle(color: Colors.blue),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      launch(
-                                          'https://escada-games.itch.io/null-dagger');
-                                    }),
-                              TextSpan(
-                                  text:
-                                      '- Alcançamos o 30º lugar na Ludum Dare #46 na categoria humor com o jogo Pigeon Ascent, dentre outros 3576 jogos;\n',
-                                  style: TextStyle(color: Colors.blue),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      launch(
-                                          'https://escada-games.itch.io/pigeon-ascent');
-                                    }),
-                              TextSpan(
-                                  text:
-                                      '- Fomos selecionados para entrar na revista eletrônica online Indieposcalypse, participando com os jogos Diver Down, Pigeon Ascent, e Pickaxe Tower;\n\n',
-                                  style: TextStyle(color: Colors.blue),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      launch(
-                                          'https://pizzapranks.itch.io/indiepocalypse-11');
-                                    }),
-                              TextSpan(
-                                  text:
-                                      'Nos botões acima, você  pode conferir nossos jogos em diferentes sites. Esperamos que goste deles!\n'),
-                              TextSpan(
-                                  text:
-                                      'Por fim, você pode entrar em contato com a gente mandando um e-mail para escadagames@gmail.com')
-                            ]))),
+                    child: currentPage == 'home'
+                        ? ScreenHome(widget: widget)
+                        : ScreenAllGames(widget: widget),
                   ),
                 )
               ]),
         ]));
+  }
+}
+
+class ScreenHome extends StatelessWidget {
+  final widget;
+  ScreenHome({this.widget});
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text.rich(TextSpan(
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontSize: 24,
+            ),
+            children: [
+              WidgetSpan(
+                  child: Center(
+                child: Text('Bem-vindo ao website da Escada Games!\n\n',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+              )),
+              TextSpan(
+                  text:
+                      "Nós somos um pequeno grupo de desenvolvedores brasileiros de jogos, no momento mais hobbystas do que qualquer outra coisa. Até agora, nossas maiores conquistas foram:\n\n"),
+              TextSpan(
+                  text:
+                      '- Vencemos a Godot Wild Jam #2 com o jogo Diver Down, dentre outros 28 jogos;\n',
+                  style: TextStyle(color: Colors.blue),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      launch('https://escada-games.itch.io/diver-down');
+                    }),
+              TextSpan(
+                  text:
+                      '- Vencemos a Godot Wild Jam #10 com o jogo Null Dagger, dentre outros 28 jogos;\n',
+                  style: TextStyle(color: Colors.blue),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      launch('https://escada-games.itch.io/null-dagger');
+                    }),
+              TextSpan(
+                  text:
+                      '- Alcançamos o 30º lugar na Ludum Dare #46 na categoria humor com o jogo Pigeon Ascent, dentre outros 3576 jogos;\n',
+                  style: TextStyle(color: Colors.blue),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      launch('https://escada-games.itch.io/pigeon-ascent');
+                    }),
+              TextSpan(
+                  text:
+                      '- Fomos selecionados para entrar na revista eletrônica online Indieposcalypse, participando com os jogos Diver Down, Pigeon Ascent, e Pickaxe Tower;\n\n',
+                  style: TextStyle(color: Colors.blue),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      launch('https://pizzapranks.itch.io/indiepocalypse-11');
+                    }),
+              TextSpan(
+                  text:
+                      'Nos botões acima, você  pode conferir nossos jogos em diferentes sites. Esperamos que goste deles!\n'),
+              TextSpan(
+                  text:
+                      'Por fim, você pode entrar em contato com a gente mandando um e-mail para escadagames@gmail.com')
+            ])));
   }
 }
 
