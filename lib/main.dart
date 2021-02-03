@@ -268,38 +268,46 @@ class ScreenHome extends StatelessWidget {
               TextSpan(
                   text:
                       "Nós somos um pequeno grupo de desenvolvedores brasileiros de jogos, no momento mais hobbystas do que qualquer outra coisa. Até agora, nossas maiores conquistas foram:\n\n"),
-              TextSpan(
-                  text:
-                      '- Vencemos a Godot Wild Jam #2 com o jogo Diver Down, dentre outros 28 jogos;\n',
-                  style: TextStyle(color: Colors.blue),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      launch('https://escada-games.itch.io/diver-down');
-                    }),
-              TextSpan(
-                  text:
-                      '- Vencemos a Godot Wild Jam #10 com o jogo Null Dagger, dentre outros 28 jogos;\n',
-                  style: TextStyle(color: Colors.blue),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      launch('https://escada-games.itch.io/null-dagger');
-                    }),
-              TextSpan(
-                  text:
-                      '- Alcançamos o 30º lugar na Ludum Dare #46 na categoria humor com o jogo Pigeon Ascent, dentre outros 3576 jogos;\n',
-                  style: TextStyle(color: Colors.blue),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      launch('https://escada-games.itch.io/pigeon-ascent');
-                    }),
-              TextSpan(
-                  text:
-                      '- Fomos selecionados para entrar na revista eletrônica online Indieposcalypse, participando com os jogos Diver Down, Pigeon Ascent, e Pickaxe Tower;\n\n',
-                  style: TextStyle(color: Colors.blue),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      launch('https://pizzapranks.itch.io/indiepocalypse-11');
-                    }),
+              WidgetSpan(
+                  child: InkWell(
+                child: Text(
+                  '- Vencemos a Godot Wild Jam #2 com o jogo Diver Down, dentre outros 28 jogos;\n',
+                  style: TextStyle(color: Colors.blue, fontSize: 24),
+                ),
+                onTap: () {
+                  launch('https://escada-games.itch.io/diver-down');
+                },
+              )),
+              WidgetSpan(
+                  child: InkWell(
+                child: Text(
+                  '- Vencemos a Godot Wild Jam #10 com o jogo Null Dagger, dentre outros 28 jogos;\n',
+                  style: TextStyle(color: Colors.blue, fontSize: 24),
+                ),
+                onTap: () {
+                  launch('https://escada-games.itch.io/null-dagger');
+                },
+              )),
+              WidgetSpan(
+                  child: InkWell(
+                child: Text(
+                  '- Alcançamos o 30º lugar na Ludum Dare #46 na categoria humor com o jogo Pigeon Ascent, dentre outros 3576 jogos;\n',
+                  style: TextStyle(color: Colors.blue, fontSize: 24),
+                ),
+                onTap: () {
+                  launch('https://escada-games.itch.io/pigeon-ascent');
+                },
+              )),
+              WidgetSpan(
+                  child: InkWell(
+                child: Text(
+                  '- Fomos selecionados para entrar na revista eletrônica online Indieposcalypse, participando com os jogos Diver Down, Pigeon Ascent, e Pickaxe Tower;\n\n',
+                  style: TextStyle(color: Colors.blue, fontSize: 24),
+                ),
+                onTap: () {
+                  launch('https://pizzapranks.itch.io/indiepocalypse-11');
+                },
+              )),
               TextSpan(
                   text:
                       'Nos botões acima, você  pode conferir nossos jogos em diferentes sites. Esperamos que goste deles!\n'),
