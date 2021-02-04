@@ -55,9 +55,9 @@ class MyHomePage extends StatefulWidget {
     'serpent',
     'ticaruga',
     'wafflegeddon',
+    'wallker-demolition-co',
     'work-so-that-i-can-get-those-beautiful-pigeons-you-darn-bees',
-    'zeitmeister',
-    'wallker-demolition-co'
+    'zeitmeister'
   ];
 
   List<String> lMostPopular = [
@@ -77,7 +77,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Future<StrIpify> futureUserIp;
+  Future<JsonSalutApi> futureUserLocal;
   Future<JsonItchioGame> futureItchioGame;
+  String userLocal = 'en';
   String currentPage = 'home';
 
   void _launchURL(url) async {
@@ -97,6 +100,19 @@ class _MyHomePageState extends State<MyHomePage> {
     for (String game in widget.lMostPopular) {
       widget..lFutureMostPopular.add(fetchItchioGameData(game));
     }
+
+    futureUserIp = fetchIpifyData();
+    futureUserIp.then((ipApifyData) {
+      setState(() {
+        //String strUserIp = ipApifyData.strIp;
+        futureUserLocal = fetchJsonSalutApiData(ipApifyData.strIp);
+        futureUserLocal.then((value) {
+          setState(() {
+            userLocal = value.strLocal;
+          });
+        });
+      });
+    });
   }
 
   @override
@@ -139,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         size: 32,
                       ),
                       padding: EdgeInsets.all(16),
-                      tooltip: 'Our games',
+                      tooltip: userLocal == 'br' ? 'Nossos jogos' : 'Our games',
                       onPressed: () {
                         setState(() {
                           currentPage = 'ourGames';
@@ -153,7 +169,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         color: Color.fromRGBO(241, 89, 82, 1.0),
                       ),
                       padding: EdgeInsets.all(16),
-                      tooltip: 'Our itch.io page',
+                      tooltip: userLocal == 'br'
+                          ? 'Nossa página do itch.io'
+                          : 'Our itch.io page',
                       onPressed: () {
                         _launchURL('https://escada-games.itch.io');
                       },
@@ -165,7 +183,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         color: Color.fromRGBO(41, 121, 255, 1.0),
                       ),
                       padding: EdgeInsets.all(16),
-                      tooltip: 'Our gotm.io page',
+                      tooltip: userLocal == 'br'
+                          ? 'Nossa página do gotm.io'
+                          : 'Our gotm.io page',
                       onPressed: () {
                         _launchURL('https://gotm.io/escada-games');
                       },
@@ -176,7 +196,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         size: 32,
                       ),
                       padding: EdgeInsets.all(16),
-                      tooltip: 'About us',
+                      tooltip: userLocal == 'br' ? 'Sobre nós' : 'About us',
                       onPressed: () {
                         ;
                       },
@@ -187,7 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         size: 32,
                       ),
                       padding: EdgeInsets.all(16),
-                      tooltip: 'Contact',
+                      tooltip: userLocal == 'br' ? 'Contato' : 'Contact',
                       onPressed: () {
                         ;
                       },
@@ -218,7 +238,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Center(
                   child: SelectableText(
-                      'A small brazilian indie game development group',
+                      userLocal == 'br'
+                          ? 'Um pequeno grupo brasileiro de desenvolvimento de jogos'
+                          : 'A small brazilian indie game development group',
                       style: TextStyle(
                           fontSize: 16,
                           // fontWeight: FontWeight.bold,
@@ -233,12 +255,20 @@ class _MyHomePageState extends State<MyHomePage> {
                     width: double.infinity,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(128),
-                            topRight: Radius.circular(128)),
+                            topLeft: Radius.circular(32),
+                            topRight: Radius.circular(32)),
                         color: Colors.white),
                     child: currentPage == 'home'
-                        ? ScreenHome(widget: widget)
-                        : ScreenAllGames(widget: widget),
+                        ? (userLocal == 'br')
+                            ? ScreenHome(widget: widget)
+                            : ScreenHomeEnglish(
+                                widget: widget,
+                              )
+                        : (userLocal == 'br')
+                            ? ScreenAllGames(widget: widget)
+                            : ScreenAllGamesEnglish(
+                                widget: widget,
+                              ),
                   ),
                 )
               ]),
@@ -318,6 +348,78 @@ class ScreenHome extends StatelessWidget {
   }
 }
 
+class ScreenHomeEnglish extends StatelessWidget {
+  final widget;
+  ScreenHomeEnglish({this.widget});
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text.rich(TextSpan(
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontSize: 24,
+            ),
+            children: [
+              WidgetSpan(
+                  child: Center(
+                child: Text('Welcome to Escada Games\'s website!\n\n',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+              )),
+              TextSpan(
+                  text:
+                      "We are a small group of brazilian game developers, at the moment more hobbyist than anything else. Until now, or biggest achievements have been:\n\n"),
+              WidgetSpan(
+                  child: InkWell(
+                child: Text(
+                  '- We won the Godot Wild Jam #2 with the game Diver Down, over other 28 games;\n',
+                  style: TextStyle(color: Colors.blue, fontSize: 24),
+                ),
+                onTap: () {
+                  launch('https://escada-games.itch.io/diver-down');
+                },
+              )),
+              WidgetSpan(
+                  child: InkWell(
+                child: Text(
+                  '- We won the Godot Wild Jam #10 with the game Null Dagger, over other 28 games;\n',
+                  style: TextStyle(color: Colors.blue, fontSize: 24),
+                ),
+                onTap: () {
+                  launch('https://escada-games.itch.io/null-dagger');
+                },
+              )),
+              WidgetSpan(
+                  child: InkWell(
+                child: Text(
+                  '- We got the 30º place at the Ludum Dare #46 on the humor category, over 3576 other games;\n',
+                  style: TextStyle(color: Colors.blue, fontSize: 24),
+                ),
+                onTap: () {
+                  launch('https://escada-games.itch.io/pigeon-ascent');
+                },
+              )),
+              WidgetSpan(
+                  child: InkWell(
+                child: Text(
+                  '- We were accepted to join the online magazine Indiepocalypse, participating with the games Diver Down, Pigeon Ascent, and Pickaxe Tower;\n\n',
+                  style: TextStyle(color: Colors.blue, fontSize: 24),
+                ),
+                onTap: () {
+                  launch('https://pizzapranks.itch.io/indiepocalypse-11');
+                },
+              )),
+              TextSpan(
+                  text:
+                      'On the buttons above, you can check out our games in different websites. We hope you enjoy them!\n'),
+              TextSpan(
+                  text:
+                      'Also, you can get in touch with us by sending an e-mail to escadagames@gmail.com')
+            ])));
+  }
+}
+
 class ScreenAllGames extends StatelessWidget {
   final widget;
   ScreenAllGames({this.widget});
@@ -333,6 +435,72 @@ class ScreenAllGames extends StatelessWidget {
         children: [
           SelectableText(
             'Nossos jogos:',
+            style: TextStyle(fontSize: 64, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Flexible(
+            fit: FlexFit.loose,
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              // margin: EdgeInsets.all(8),
+              child: Scrollbar(
+                child: ResponsiveGridList(
+                  desiredItemWidth:
+                      150, //queryData.size.width > 256 ? 256 : 128,
+                  minSpacing: 32,
+                  // squareCells: true,
+                  children: [
+                    for (Future<JsonItchioGame> futureGame
+                        in widget.lFutureGames)
+                      FutureBuilder<JsonItchioGame>(
+                        future: futureGame,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return GameCard.fromSnapshotData(snapshot);
+                          } else if (snapshot.hasError) {
+                            return SelectableText(
+                                "${snapshot.error}\nErro no snapshot.");
+                          } else {
+                            return CircularProgressIndicator();
+                            // return Flexible(
+                            //     fit: FlexFit.loose,
+                            //     child: CircularProgressIndicator());
+                          }
+                        },
+                      )
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 8,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ScreenAllGamesEnglish extends StatelessWidget {
+  final widget;
+  ScreenAllGamesEnglish({this.widget});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
+      padding: EdgeInsets.all(8),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SelectableText(
+            'Our games:',
             style: TextStyle(fontSize: 64, fontWeight: FontWeight.bold),
           ),
           SizedBox(
@@ -531,5 +699,68 @@ Future<JsonItchioGame> fetchItchioGameData(String strGameName) async {
     return JsonItchioGame.fromJson(gameUrl, responseBody);
   } else {
     throw Exception('Erro: falha em obter dados da API do itch.io.');
+  }
+}
+
+class JsonIpApi {
+  final String strIp;
+  JsonIpApi({this.strIp});
+
+  factory JsonIpApi.parseJson(Map<String, dynamic> json) {
+    return JsonIpApi(strIp: json['query']);
+  }
+
+  String get ip {
+    return strIp;
+  }
+}
+
+Future<JsonIpApi> fetchJsonIpApiData() async {
+  final response = await http.get('http://ip-api.com/json/');
+
+  if (response.statusCode == 200) {
+    var responseBody = dartConvert.jsonDecode(response.body);
+    return JsonIpApi.parseJson(responseBody);
+  } else {
+    throw Exception('Failed to get data from Ip-Api.');
+  }
+}
+
+class JsonSalutApi {
+  final String strLocal;
+  JsonSalutApi({this.strLocal});
+
+  factory JsonSalutApi.parseJson(Map<String, dynamic> json) {
+    return JsonSalutApi(
+      strLocal: json['code'],
+    );
+  }
+}
+
+Future<JsonSalutApi> fetchJsonSalutApiData(userIp) async {
+  final response =
+      await http.get('https://fourtonfish.com/hellosalut/?ip=' + userIp);
+  if (response.statusCode == 200) {
+    var responseBody = dartConvert.jsonDecode(response.body);
+    return JsonSalutApi.parseJson(responseBody);
+  } else {
+    throw Exception('Failed to get data from Salut api.');
+  }
+}
+
+class StrIpify {
+  final String strIp;
+  StrIpify({this.strIp});
+  factory StrIpify.parseResponse(String response) {
+    return StrIpify(strIp: response);
+  }
+}
+
+Future<StrIpify> fetchIpifyData() async {
+  final response = await http.get('https://api.ipify.org');
+  if (response.statusCode == 200) {
+    return StrIpify.parseResponse(response.body);
+  } else {
+    throw Exception('Failed to get data from Ipify.');
   }
 }
