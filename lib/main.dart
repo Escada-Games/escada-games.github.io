@@ -189,27 +189,27 @@ class _MyHomePageState extends State<MyHomePage> {
                         _launchURL('https://gotm.io/escada-games');
                       },
                     ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.help,
-                        size: 32,
-                      ),
-                      padding: EdgeInsets.all(16),
-                      tooltip: userLocal == 'br' ? 'Sobre nós' : 'About us',
-                      onPressed: () {
-                        ;
-                      },
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.email,
-                        size: 32,
-                      ),
-                      padding: EdgeInsets.all(16),
-                      tooltip: userLocal == 'br' ? 'Contato' : 'Contact',
-                      onPressed: () {
-                        ;
-                      },
+                    // IconButton(
+                    //   icon: Icon(
+                    //     Icons.help,
+                    //     size: 32,
+                    //   ),
+                    //   padding: EdgeInsets.all(16),
+                    //   tooltip: userLocal == 'br' ? 'Sobre nós' : 'About us',
+                    //   onPressed: () {
+                    //     ;
+                    //   },
+                    // ),
+                    // IconButton(
+                    //   icon: Icon(
+                    //     Icons.email,
+                    //     size: 32,
+                    //   ),
+                    //   padding: EdgeInsets.all(16),
+                    //   tooltip: userLocal == 'br' ? 'Contato' : 'Contact',
+                    //   onPressed: () {
+                    //     ;
+                    //   },
                     ),
                     SizedBox(
                       width: 16,
